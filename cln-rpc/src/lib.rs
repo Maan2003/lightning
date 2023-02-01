@@ -4,7 +4,7 @@ pub use anyhow::Error;
 use anyhow::Result;
 use futures_util::sink::SinkExt;
 use futures_util::StreamExt;
-use log::{debug, trace};
+use tracing::{debug, trace};
 use serde_json::json;
 use std::path::Path;
 use std::sync::atomic::AtomicUsize;

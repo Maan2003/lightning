@@ -4,7 +4,7 @@ use cln_rpc::{Request, Response, ClnRpc};
 use anyhow::Result;
 use std::path::{Path, PathBuf};
 use cln_rpc::model::requests;
-use log::{debug, trace};
+use tracing::{debug, trace};
 use tonic::{Code, Status};
 
 #[derive(Clone)]

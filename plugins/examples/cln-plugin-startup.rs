@@ -47,7 +47,7 @@ async fn testmethod(_p: Plugin<()>, _v: serde_json::Value) -> Result<serde_json:
 }
 
 async fn connect_handler(_p: Plugin<()>, v: serde_json::Value) -> Result<(), Error> {
-    log::info!("Got a connect notification: {}", v);
+    tracing::info!("Got a connect notification: {}", v);
     Ok(())
 }
 
@@ -55,6 +55,6 @@ async fn peer_connected_handler(
     _p: Plugin<()>,
     v: serde_json::Value,
 ) -> Result<serde_json::Value, Error> {
-    log::info!("Got a connect hook call: {}", v);
+    tracing::info!("Got a connect hook call: {}", v);
     Ok(json!({"result": "continue"}))
 }

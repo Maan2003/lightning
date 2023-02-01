@@ -3,8 +3,6 @@ pub use anyhow::anyhow;
 use anyhow::Context;
 use futures::sink::SinkExt;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
-extern crate log;
-use log::trace;
 use messages::Configuration;
 use options::ConfigOption;
 use std::collections::HashMap;
@@ -16,6 +14,7 @@ use tokio::sync::Mutex;
 use tokio_stream::StreamExt;
 use tokio_util::codec::FramedRead;
 use tokio_util::codec::FramedWrite;
+use tracing::trace;
 
 mod codec;
 mod logging;
@@ -457,8 +456,8 @@ where
         // Start the PluginDriver to handle plugin IO
         tokio::spawn(async move {
             if let Err(e) = driver.run(receiver, input, output).await {
-		log::warn!("Plugin loop returned error {:?}", e);
-	    }
+                tracing::warn!("Plugin loop returned error {:?}", e);
+            }
 
             // Now that we have left the reader loop its time to
             // notify any waiting tasks. This most likely will cause
@@ -665,7 +664,7 @@ where
             params
         );
         if let Err(e) = callback(plugin.clone(), params.clone()).await {
-            log::error!("Error in notification handler '{}': {}", method, e);
+            tracing::error!("Error in notification handler '{}': {}", method, e);
         }
         Ok(())
     }
